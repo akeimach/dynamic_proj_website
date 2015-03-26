@@ -5,10 +5,10 @@ session_start();
 
 <?php
 //connection to projects database
-$user = 'aksiteadmin';
-$password = 'projectpass';
-$db = 'ebdb';
-$host = 'aa1diu7vrd5d8v.ciacvodjbmo9.us-west-2.rds.amazonaws.com';
+$user = '';
+$password = '';
+$db = '';
+$host = '';
 $port = 3306;
 
 $link = mysql_connect("$host:$port", $user, $password);
