@@ -5,10 +5,10 @@ session_start();
 
 <?php
 //connection to projects database
-$user = '';
-$password = '';
-$db = '';
-$host = '';
+$user = 'aksiteadmin';
+$password = 'projectpass';
+$db = 'ebdb';
+$host = 'aa1diu7vrd5d8v.ciacvodjbmo9.us-west-2.rds.amazonaws.com';
 $port = 3306;
 
 $link = mysql_connect("$host:$port", $user, $password);
@@ -113,14 +113,14 @@ while ($row = mysql_fetch_assoc($result)) {
        }
     }
     
-    echo '<p><font size="3"><br>'.$row['summary'].'</p>';
+    echo '<div class="data"><p><font size="3"><br>'.$row['summary'].'</p></div>';
 
     $news_query = "SELECT * FROM news WHERE proj = '".$row['proj']."' ORDER BY timein DESC";
     $news_result = mysql_query($news_query);
 
     while ($news_row = mysql_fetch_assoc($news_result)) {
         
-        echo '<p><font size="2"><font color="#A1D8C4">News: '.$news_row['headline'].'</font><br>'.$news_row['description'].'</font></p>';
+        echo '<div class="data"><p><font size="2"><font color="#A1D8C4">'.$news_row['headline'].' </font>'.$news_row['description'].'</font></p></div>';
     }
 
     $pub_query = "SELECT title, cite, pub_link FROM publications WHERE proj = '".$row['proj']."' ORDER BY timein DESC";
@@ -177,7 +177,7 @@ $result = mysql_query($query);
 
 while ($row = mysql_fetch_assoc($result)) {
 
-   echo '<p><a href="#'.$row['proj_link'].'">'.$row['full_title'];
+    echo '<p><a href="#'.$row['proj_link'].'">'.$row['full_title'];
     if ($row['subtitle']) { echo ': '.$row['subtitle'].'</a></p>'; }
     else { echo '</a></p>'; }
 
@@ -193,14 +193,14 @@ while ($row = mysql_fetch_assoc($result)) {
        }
     }
     
-    echo '<p><font size="3"><br>'.$row['summary'].'</p>';
+    echo '<div class="data"><p><font size="3"><br>'.$row['summary'].'</p></div>';
 
     $news_query = "SELECT * FROM news WHERE proj = '".$row['proj']."' ORDER BY timein DESC";
     $news_result = mysql_query($news_query);
 
     while ($news_row = mysql_fetch_assoc($news_result)) {
         
-        echo '<p><font size="2"><font color="#A1D8C4">News: '.$news_row['headline'].'</font><br>'.$news_row['description'].'</font></p>';
+        echo '<div class="data"><p><font size="2"><font color="#A1D8C4">'.$news_row['headline'].' </font>'.$news_row['description'].'</font></p></div>';
     }
 
     $pub_query = "SELECT title, cite, pub_link FROM publications WHERE proj = '".$row['proj']."' ORDER BY timein DESC";
