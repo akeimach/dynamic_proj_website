@@ -39,11 +39,11 @@
  */
 
 // MySQL host name, user name, password, database, and table
-$opts['hn'] = 'aa1diu7vrd5d8v.ciacvodjbmo9.us-west-2.rds.amazonaws.com';
-$opts['un'] = 'aksiteadmin';
-$opts['pw'] = 'projectpass';
-$opts['db'] = 'ebdb';
-$opts['tb'] = 'project';
+$opts['hn'] = 'mySQL host name';
+$opts['un'] = 'user name';
+$opts['pw'] = 'password';
+$opts['db'] = 'database name';
+$opts['tb'] = 'specific table';
 
 // Name of field which is the unique key
 $opts['key'] = 'full_title';

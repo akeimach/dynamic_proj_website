@@ -1,31 +1,33 @@
+
 <?php 
 session_start();
+?>
+
+<?php
 //connection to projects database
-$user = 'aksiteadmin';
-$password = 'projectpass';
-$db = 'ebdb';
-$host = 'aa1diu7vrd5d8v.ciacvodjbmo9.us-west-2.rds.amazonaws.com';
+$user = '';
+$password = '';
+$db = '';
+$host = '';
 $port = 3306;
+
 $link = mysql_connect("$host:$port", $user, $password);
+
 if(! $link ) { die('Could not connect: '.mysql_error()); }
+
 $db_selected = mysql_select_db($db, $link);
 ?>
 
+
+
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>alyssakeimach.net | Articles</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/grayscale.css" rel="stylesheet">
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-</head>
+
+<?php include "header.php"; ?>
+
+
+
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
 
     <!-- Navigation -->
@@ -48,10 +50,10 @@ $db_selected = mysql_select_db($db, $link);
                         <a href="#page-top"></a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#astronomy">Astronomy</a>
+                        <a class="page-scroll" href="#current">Current Projects</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#other">Other Works</a>
+                        <a class="page-scroll" href="#past">Past Projects</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#contact">Contact</a>
@@ -69,9 +71,9 @@ $db_selected = mysql_select_db($db, $link);
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
-                        <h1 class="brand-heading">Article Database</h1>
-                        <p class="intro-text"><br><a href="http://alyssakeimach.net/">Alyssa Keimach</a></p>
-                        <a href="#astronomy" class="btn btn-circle page-scroll">
+                        <h1 class="brand-heading"><a href="http://www.eecs.umich.edu/db/">Database Systems</a>      </h1>
+                        <p class="intro-text">Projects Page<br><a href="http://web.eecs.umich.edu/~mozafari/">Barzan Mozafari</a></p>
+                        <a href="#current" class="btn btn-circle page-scroll">
                             <i class="fa fa-angle-double-down animated"></i>
                         </a>
                     </div>
@@ -80,11 +82,14 @@ $db_selected = mysql_select_db($db, $link);
         </div>
     </header>
 
-    <!-- astro Section -->
-    <section id="astronomy" class="container content-section">
+    <!-- current projects Section -->
+    <section id="current" class="container content-section">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
-                <h2>Astronomy</h2>
+                <h2>Current Projects</h2>
+
+
+
 
 <?php
 $query = "SELECT * FROM project WHERE project.curr_tag = 1 ORDER BY project.timein DESC";
@@ -108,14 +113,14 @@ while ($row = mysql_fetch_assoc($result)) {
        }
     }
     
-    echo '<div class="data"><p><font size="3">'.$row['summary'].'</font></p></div>';
+    echo '<p><font size="3"><br>'.$row['summary'].'</p>';
 
     $news_query = "SELECT * FROM news WHERE proj = '".$row['proj']."' ORDER BY timein DESC";
     $news_result = mysql_query($news_query);
 
     while ($news_row = mysql_fetch_assoc($news_result)) {
         
-        echo '<div class="data"><p><font size="2"><font color="#A1D8C4">'.$news_row['headline'].' </font>'.$news_row['description'].'</font></p></div>';
+        echo '<p><font size="2"><font color="#A1D8C4">News: '.$news_row['headline'].'</font><br>'.$news_row['description'].'</font></p>';
     }
 
     $pub_query = "SELECT title, cite, pub_link FROM publications WHERE proj = '".$row['proj']."' ORDER BY timein DESC";
@@ -133,27 +138,46 @@ while ($row = mysql_fetch_assoc($result)) {
              if ($num_rows > 0) { echo ','; }
              else { echo '. '; }
        }
-        echo '<p><b><a href="'.$pub_row['pub_link'].'">'.$pub_row['title'].'. </b></a>'.$pub_row['cite'].'</p>';
+   
+        echo '<b><a href="'.$pub_row['pub_link'].'">'.$pub_row['title'].'. </b></font></a>'.$pub_row['cite'].'</p>';
+
     }
 } 
+
+
 ?>
+
+
+
+
+
+
+
 
             </div>
         </div>
     </section>
 
-    <!-- other articles Section -->
-    <section id="other" class="container content-section">
+
+
+
+
+    <!-- past projects Section -->
+    <section id="past" class="container content-section">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
-                <h2>Other Works</h2>
+                <h2>Past Projects</h2>
+
+
+
+
 <?php
 $query = "SELECT * FROM project WHERE project.curr_tag = 0 ORDER BY project.timein DESC";
 $result = mysql_query($query);
 
 while ($row = mysql_fetch_assoc($result)) {
 
-    echo '<p><a href="#'.$row['proj_link'].'">'.$row['full_title'];
+   echo '<p><a href="#'.$row['proj_link'].'">'.$row['full_title'];
     if ($row['subtitle']) { echo ': '.$row['subtitle'].'</a></p>'; }
     else { echo '</a></p>'; }
 
@@ -169,14 +193,14 @@ while ($row = mysql_fetch_assoc($result)) {
        }
     }
     
-    echo '<div class="data"><p><font size="3">'.$row['summary'].'</font></p></div>';
+    echo '<p><font size="3"><br>'.$row['summary'].'</p>';
 
     $news_query = "SELECT * FROM news WHERE proj = '".$row['proj']."' ORDER BY timein DESC";
     $news_result = mysql_query($news_query);
 
     while ($news_row = mysql_fetch_assoc($news_result)) {
         
-        echo '<div class="data"><p><font size="2"><font color="#A1D8C4">'.$news_row['headline'].' </font>'.$news_row['description'].'</font></p></div>';
+        echo '<p><font size="2"><font color="#A1D8C4">News: '.$news_row['headline'].'</font><br>'.$news_row['description'].'</font></p>';
     }
 
     $pub_query = "SELECT title, cite, pub_link FROM publications WHERE proj = '".$row['proj']."' ORDER BY timein DESC";
@@ -194,10 +218,15 @@ while ($row = mysql_fetch_assoc($result)) {
              if ($num_rows > 0) { echo ','; }
              else { echo '. '; }
        }
-        echo '<p><b><a href="'.$pub_row['pub_link'].'">'.$pub_row['title'].'. </b></a>'.$pub_row['cite'].'</p>';
+   
+        echo '<b><a href="'.$pub_row['pub_link'].'">'.$pub_row['title'].'. </b></font></a>'.$pub_row['cite'].'</p>';
+
     }
 } 
+
+
 ?>
+
             </div>
         </div>
     </section>
@@ -206,7 +235,7 @@ while ($row = mysql_fetch_assoc($result)) {
     <section id="contact" class="container content-section text-center">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
-                <p>Alyssa Keimach is a student at the <a href="http://umich.edu/">University Of Michigan</a>. This dynamic website connects to a database storing articles she wrote for <a href="http://www.calacademy.org/explore-science/science-today">Science Today</a> while she was working at the <a href="http://www.calacademy.org/">California Academy of Sciences</a>.</p>
+                <p>Barzan Mozafari is an Assistant Professor of Computer Science and Engineering at the <a href="http://umich.edu/">University Of Michigan</a>. He studies databases, distributed systems, and large-scale data-intensive systems.</p>
                 <p><a href="login.php">Admin Portal</a>
                 </p>
             </div>
@@ -219,7 +248,8 @@ while ($row = mysql_fetch_assoc($result)) {
         <div class="container text-center">
            
             <p>By Alyssa Keimach</p>
-           </div>
+     <p>Created with Bootstrap</p>
+        </div>
     </footer>
 
     <!-- jQuery -->
