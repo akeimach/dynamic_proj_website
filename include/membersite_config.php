@@ -1,19 +1,21 @@
 <?PHP
 require_once("./include/fg_membersite.php");
 
+include 'db_connection.php';
+
 $fgmembersite = new FGMembersite();
 
 //Provide your site name here
-$fgmembersite->SetWebsiteName('');
+$fgmembersite->SetWebsiteName('Dynamic screening task');
 
 //Provide the email address where you want to get notifications
-$fgmembersite->SetAdminEmail('');
+$fgmembersite->SetAdminEmail('alyssakeimach@gmail.com');
 
 //Provide your database login details here:
 //hostname, user name, password, database name and table name
 //note that the script will create the table (for example, fgusers in this case)
 //by itself on submitting register.php for the first time
-$fgmembersite->InitDB(/*hostname*/,                      /*username*/, /*password*/,                      /*database name*/, /*table name*/);
+$fgmembersite->InitDB($host,$user,$password,$db,'adminlogin');   
 
 //For better security. Get a random string from this link: http://tinyurl.com/randstr
 // and put it here
